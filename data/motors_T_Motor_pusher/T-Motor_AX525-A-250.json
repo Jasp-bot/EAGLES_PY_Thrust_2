@@ -1,0 +1,12 @@
+{
+  "id": "T-Motor_AX525-A-250",
+  "name": "AX525-A-250",
+  "manufacturer": "T-Motor",
+  "kv": 250.0,
+  "resistance": 0.022,
+  "io": 2.8,
+  "max_current": 100.0,
+  "weight_g": 600.0,
+  "max_power": 2250.0,
+  "io_voltage": 15.0
+}
