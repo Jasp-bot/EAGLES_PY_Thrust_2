@@ -53,7 +53,7 @@ PMAX_IN       = 14
 PD_MIN        = None          # Propeller: P/D-Verhaeltnis (z.B. 0.55 .. 0.75)
 PD_MAX        = None
 BLADES        = 2          # erlaubte Blattzahlen, z.B. [2] oder [2, 3]
-MOTOR_MASS_MAX_G = None       # Motoren: Gewichtslimit [g], z.B. 500
+MOTOR_MASS_MAX_G = 600       # Motoren: Gewichtslimit [g], z.B. 500
 
 # --- Filter: Hersteller (Listen -> mehrere gleichzeitig vergleichen) -------
 # Beispiel Vergleich:  MOTOR_MFR = ["T-Motor", "HobbyWing"]
@@ -72,7 +72,7 @@ SHOW_PLOTS    = False        # zusaetzlich Fenster oeffnen (plt.show())
 
 # Laufzeit: teure Groessen (Vmax/Standschub/Startschub/Endurance) nur fuer die
 # besten K Kombinationen. None = fuer alle (volles Vmax-Streudiagramm, langsamer).
-HEAVY_METRICS_TOP = 10
+HEAVY_METRICS_TOP = 20
 # ===========================================================================
 
 
