@@ -1,0 +1,12 @@
+{
+  "id": "XXX_Hobbywing_C8020-180",
+  "name": "C8020-180",
+  "manufacturer": "Hobbywing",
+  "kv": 180.0,
+  "resistance": 0.0112,
+  "io": 5.0,
+  "max_current": 189.0,
+  "weight_g": 834.0,
+  "max_power": 3402,
+  "io_voltage": 48.0
+}

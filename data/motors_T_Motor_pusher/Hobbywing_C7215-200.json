@@ -1,0 +1,12 @@
+{
+  "id": "XXX_Hobbywing_C7215-200",
+  "name": "C7215-200",
+  "manufacturer": "Hobbywing",
+  "kv": 200.0,
+  "resistance": 0.0246,
+  "io": 4.55,
+  "max_current": 111.0,
+  "weight_g": 555.0,
+  "max_power": 2538,
+  "io_voltage": 48.0
+}

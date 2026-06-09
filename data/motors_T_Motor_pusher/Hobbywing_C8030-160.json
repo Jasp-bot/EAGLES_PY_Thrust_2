@@ -1,0 +1,12 @@
+{
+  "id": "Hobbywing_C8030-160",
+  "name": "C8030-160",
+  "manufacturer": "Hobbywing",
+  "kv": 160.0,
+  "resistance": 0.0077,
+  "io": 6.0,
+  "max_current": 201.0,
+  "weight_g": 1115.0,
+  "max_power": 6377.0,
+  "io_voltage": 48.0
+}

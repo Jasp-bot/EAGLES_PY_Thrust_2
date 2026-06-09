@@ -1,0 +1,12 @@
+{
+  "id": "XXX_Hobbywing_C6220-220",
+  "name": "C6220-220",
+  "manufacturer": "Hobbywing",
+  "kv": 220.0,
+  "resistance": 0.0234,
+  "io": 3.7,
+  "max_current": 86.0,
+  "weight_g": 460.0,
+  "max_power": 2480,
+  "io_voltage": 48.0
+}

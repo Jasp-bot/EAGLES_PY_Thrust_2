@@ -1,0 +1,12 @@
+{
+  "id": "XXX_Hobbywing_C8025-160",
+  "name": "C8025-160",
+  "manufacturer": "Hobbywing",
+  "kv": 160.0,
+  "resistance": 0.0105,
+  "io": 5.0,
+  "max_current": 155.0,
+  "weight_g": 966.0,
+  "max_power": 3920,
+  "io_voltage": 48.0
+}

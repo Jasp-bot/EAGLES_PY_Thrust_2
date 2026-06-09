@@ -1,0 +1,12 @@
+{
+  "id": "Hobbywing_C7225-160",
+  "name": "C7225-160",
+  "manufacturer": "Hobbywing",
+  "kv": 160.0,
+  "resistance": 0.0184,
+  "io": 4.36,
+  "max_current": 132.7,
+  "weight_g": 755.0,
+  "max_power": 6377.0,
+  "io_voltage": 48.0
+}
