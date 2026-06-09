@@ -20,7 +20,7 @@ from .database import (load_motor_json, load_propeller_json,
                        load_motors_dir, load_props_dir, load_motors_csv,
                        example_motors, example_props)
 
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 __all__ = [
     "Airframe", "Battery", "Motor",
     "BasePropeller", "MeasuredPropeller", "EstimatedPropeller",

@@ -37,17 +37,17 @@ PROPS_DIR  = DATA_DIR / "propellers"                   # rekursiv (inkl. Unteror
 MASS_KG       = 17.0
 V_CRUISE      = 20.0
 V_MAX_TARGET  = 30.0
-GLIDE_RATIO   = 10.0          # L/D im Reiseflug (Endurance haengt hieran)
+GLIDE_RATIO   = 12.0          # L/D im Reiseflug (Endurance haengt hieran)
 PUSHER_FACTOR = 0.92
-DESIGN_THRUST = 25.0          # konservativer Reserve-/Auslegungsschub (Start/Steig)
-BATTERY_WH    = 1500.0        # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
+DESIGN_THRUST = 22.0          # konservativer Reserve-/Auslegungsschub (Start/Steig)
+BATTERY_WH    = 816        # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
 RESERVE       = 0.20
 
 # --- Filter: Bereiche (None = keine Grenze) --------------------------------
 KV_MIN        = 100.0         # Motoren: Kv-Bereich [rpm/V]
 KV_MAX        = 300.0
-DMIN_IN       = 15.0          # Propeller: Durchmesserbereich [Zoll]
-DMAX_IN       = 20.0
+DMIN_IN       = 12.0          # Propeller: Durchmesserbereich [Zoll]
+DMAX_IN       = 16.0
 PMIN_IN       = None          # Propeller: Steigungsbereich [Zoll]
 PMAX_IN       = None
 PD_MIN        = None          # Propeller: P/D-Verhaeltnis (z.B. 0.55 .. 0.75)
@@ -63,7 +63,7 @@ PROP_MFR      = None          # z.B. ["APC", "Aeronaut"]
 # --- Filter: gezielte Einzelauswahl (Name/ID-Teilstring, Liste) ------------
 # Beispiel manueller Abgleich:  MOTOR_SELECT = ["U8 II", "AT4120"]
 #                               PROP_SELECT  = ["19x13", "20x13E"]
-MOTOR_SELECT  = ["AX435-A-220"]          # None = alle Motoren
+MOTOR_SELECT  = None          # None = alle Motoren
 PROP_SELECT   = None          # None = alle Propeller
 
 # --- Grafische Auswertung --------------------------------------------------
@@ -145,6 +145,8 @@ def main():
     print(f"Bordnetz    : 12S (U_voll={bat.v_full:.0f} / U_design={bat.v_design:.0f} V)")
     print(f"Akku        : {BATTERY_WH:.0f} Wh, Reserve {RESERVE*100:.0f}%\n")
 
+
+
     cands_all = optimize(motors, props, af, bat,
                          v_max_target=V_MAX_TARGET, pusher_factor=PUSHER_FACTOR,
                          filters=filt, design_thrust=DESIGN_THRUST,
@@ -162,6 +164,7 @@ def main():
               "------------------------------------")
         print(f"  {c.motor.name} ({c.motor.manufacturer}) + "
               f"{c.prop.name} ({c.prop.manufacturer})")
+        print(f"  Mass   : {c.motor.mass_kg} kg")
         print(f"  Cruise : {c.cruise.thrust_aero:.1f} N @ {c.cruise.rpm:.0f} rpm, "
               f"J={c.cruise.J:.2f}, eta_prop={c.cruise.eta_prop:.2f}, "
               f"eta_ges={c.cruise.eta_total:.2f}")

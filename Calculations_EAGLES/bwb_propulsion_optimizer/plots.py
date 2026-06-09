@@ -244,6 +244,56 @@ def plot_top_summary(plt, top):
     return fig
 
 
+# ---------------------------------------------------------------- Plot 6
+def plot_jet_velocity_vs_speed(plt, cands, airframe, pusher_factor,
+                               v_max_target, ax):
+    """Luftgeschwindigkeit am Rotoraustritt (Slipstream, V_jet = V + 2w) ueber
+    der Fluggeschwindigkeit, im stationaeren Horizontalflug (T = Widerstand)."""
+    import numpy as _np
+    rho = airframe.rho
+    vmax_plot = (v_max_target or 30) + 12
+    vs = _np.linspace(6.0, vmax_plot, 120)
+    cmap = plt.get_cmap("viridis")
+    # nach Propeller entdoppeln (gleiche Scheibe -> gleiche Kurve)
+    seen, uniq = set(), []
+    for c in cands:
+        key = round(c.prop.diameter_m, 4)
+        if key not in seen:
+            seen.add(key)
+            uniq.append(c)
+    jet_cruise = []
+    for i, c in enumerate(uniq):
+        A = c.prop.disk_area
+        T = _np.array([airframe.drag(v) / pusher_factor for v in vs])
+        w = 0.5 * (-vs + _np.sqrt(vs ** 2 + 2 * T / (rho * A)))
+        vjet = vs + 2 * w
+        col = cmap(i / max(len(uniq) - 1, 1))
+        d_in = c.prop.diameter_m / IN2M
+        ax.plot(vs, vjet, color=col, lw=1.9, label=f'{c.prop.name} (D={d_in:.0f}")')
+        # Wert am Reisepunkt fuer die y-Skalierung
+        Tc = airframe.drag(airframe.v_cruise) / pusher_factor
+        wc = 0.5 * (-airframe.v_cruise + (airframe.v_cruise ** 2
+                    + 2 * Tc / (rho * A)) ** 0.5)
+        jet_cruise.append(airframe.v_cruise + 2 * wc)
+    # Referenz: V_jet = V (kein Schub) und Winkelhalbierende
+    ax.plot(vs, vs, "k:", lw=1.2, label="V_jet = V (kein Schub)")
+    for x, lab, col in ((airframe.v_cruise, "Cruise", "0.4"),
+                        (v_max_target, "Vmax-Ziel", "purple")):
+        if x:
+            ax.axvline(x, ls=":", color=col, lw=1)
+            ax.text(x, 0.97, f" {lab}", rotation=90, va="top", ha="left",
+                    color=col, fontsize=8, transform=ax.get_xaxis_transform())
+    top = max(jet_cruise) * 1.7 if jet_cruise else 60
+    ax.set_xlim(0, vmax_plot)
+    ax.set_ylim(0, top)
+    ax.set_xlabel("Fluggeschwindigkeit V [m/s]")
+    ax.set_ylabel("Austrittsgeschwindigkeit am Rotor V_jet [m/s]")
+    ax.set_title("Slipstream-Austrittsgeschwindigkeit über der Fluggeschwindigkeit\n"
+                 "(stationärer Horizontalflug, T = Widerstand)")
+    ax.legend(fontsize=7, loc="upper left")
+    ax.grid(alpha=0.3)
+
+
 # ---------------------------------------------------------------- Orchestrator
 def make_plots(all_cands, airframe, battery, *, pusher_factor=0.92,
                v_max_target=30.0, bungee_speed=14.0,
@@ -259,12 +309,12 @@ def make_plots(all_cands, airframe, battery, *, pusher_factor=0.92,
     top_c = all_cands[:top]
     os.makedirs(outdir, exist_ok=True)
     paths = []
-    print(f"[Plots] erzeuge 5 Abbildungen "
+    print(f"[Plots] erzeuge 6 Abbildungen "
           f"({len(all_cands)} Kombis im Hintergrund, Top {len(top_c)}) ...")
 
     def _do(idx, name, fname, builder):
         t = _time.time()
-        print(f"  [{idx}/5] {name} ...", end="", flush=True)
+        print(f"  [{idx}/6] {name} ...", end="", flush=True)
         try:
             fig = builder()
             p = os.path.join(outdir, fname)
@@ -288,6 +338,12 @@ def make_plots(all_cands, airframe, battery, *, pusher_factor=0.92,
         plot_jet_theory(plt, airframe, [tc, tc * 1.7], dmin_in, dmax_in, ax)
         fig.tight_layout(); return fig
 
+    def _b6():
+        fig, ax = plt.subplots(figsize=(9, 5.6))
+        plot_jet_velocity_vs_speed(plt, top_c, airframe, pusher_factor,
+                                   v_max_target, ax)
+        fig.tight_layout(); return fig
+
     _do(1, "Schub vs. Widerstand", "1_schub_vs_widerstand.png", _b1)
     _do(2, "Strahltheorie", "2_strahltheorie.png", _b2)
     _do(3, "Auswahl-Streudiagramme", "3_auswahl_streudiagramme.png",
@@ -297,6 +353,7 @@ def make_plots(all_cands, airframe, battery, *, pusher_factor=0.92,
                                    dmin_in, dmax_in, eta_max))
     _do(5, "Top-Vergleich", "5_top_vergleich.png",
         lambda: plot_top_summary(plt, top_c))
+    _do(6, "Austrittsgeschwindigkeit über V", "6_austrittsgeschwindigkeit.png", _b6)
 
     if show:
         plt.show()
