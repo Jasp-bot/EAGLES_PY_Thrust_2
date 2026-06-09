@@ -37,9 +37,9 @@ PROPS_DIR  = DATA_DIR / "propellers"                   # rekursiv (inkl. Unteror
 MASS_KG       = 17.0
 V_CRUISE      = 20.0
 V_MAX_TARGET  = 30.0
-GLIDE_RATIO   = 12.0          # L/D im Reiseflug (Endurance haengt hieran)
+GLIDE_RATIO   = 10.0          # L/D im Reiseflug (Endurance haengt hieran)
 PUSHER_FACTOR = 0.92
-DESIGN_THRUST = 22.0          # konservativer Reserve-/Auslegungsschub (Start/Steig)
+DESIGN_THRUST = 25.0          # konservativer Reserve-/Auslegungsschub (Start/Steig)
 BATTERY_WH    = 1500.0        # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
 RESERVE       = 0.20
 
@@ -63,7 +63,7 @@ PROP_MFR      = None          # z.B. ["APC", "Aeronaut"]
 # --- Filter: gezielte Einzelauswahl (Name/ID-Teilstring, Liste) ------------
 # Beispiel manueller Abgleich:  MOTOR_SELECT = ["U8 II", "AT4120"]
 #                               PROP_SELECT  = ["19x13", "20x13E"]
-MOTOR_SELECT  = None          # None = alle Motoren
+MOTOR_SELECT  = ["AX435-A-220"]          # None = alle Motoren
 PROP_SELECT   = None          # None = alle Propeller
 
 # --- Grafische Auswertung --------------------------------------------------
