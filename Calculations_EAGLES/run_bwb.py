@@ -34,10 +34,10 @@ MOTORS_DIR = DATA_DIR / "motors_T_Motor_pusher"
 PROPS_DIR  = DATA_DIR / "propellers"                   # rekursiv (inkl. Unterordner)
 
 # ========================= KONFIG ==========================================
-MASS_KG       = 17.0
-V_CRUISE      = 20.0
-V_MAX_TARGET  = 30.0
-GLIDE_RATIO   = 12.0          # L/D im Reiseflug (Endurance haengt hieran)
+MASS_KG       = 17.0          # Abflugmasse des BWB-Pushers (inkl. Akku, Motor, Prop, ...), kg
+V_CRUISE      = 20.0        # Reisegeschwindigkeit, m/s (ca. 72 km/h, typisch für kleine E-Flugzeuge)
+V_MAX_TARGET  = 30.0        # maximal erreichbare Fluggeschwindigkeit
+GLIDE_RATIO   = 10.0          # L/D im Reiseflug (Endurance haengt hieran)
 PUSHER_FACTOR = 0.92
 DESIGN_THRUST = 22.0          # konservativer Reserve-/Auslegungsschub (Start/Steig)
 BATTERY_WH    = 816        # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
@@ -47,13 +47,13 @@ RESERVE       = 0.20
 KV_MIN        = 100.0         # Motoren: Kv-Bereich [rpm/V]
 KV_MAX        = 400.0
 DMIN_IN       = 12.0          # Propeller: Durchmesserbereich [Zoll]
-DMAX_IN       = 16.0
+DMAX_IN       = 18.0
 PMIN_IN       = None          # Propeller: Steigungsbereich [Zoll]
-PMAX_IN       = 14
+PMAX_IN       = 12
 PD_MIN        = None          # Propeller: P/D-Verhaeltnis (z.B. 0.55 .. 0.75)
 PD_MAX        = None
 BLADES        = 2          # erlaubte Blattzahlen, z.B. [2] oder [2, 3]
-MOTOR_MASS_MAX_G = 600       # Motoren: Gewichtslimit [g], z.B. 500
+MOTOR_MASS_MAX_G = None       # Motoren: Gewichtslimit [g], z.B. 500
 
 # --- Filter: Hersteller (Listen -> mehrere gleichzeitig vergleichen) -------
 # Beispiel Vergleich:  MOTOR_MFR = ["T-Motor", "HobbyWing"]
@@ -63,7 +63,7 @@ PROP_MFR      = None          # z.B. ["APC", "Aeronaut"]
 # --- Filter: gezielte Einzelauswahl (Name/ID-Teilstring, Liste) ------------
 # Beispiel manueller Abgleich:  MOTOR_SELECT = ["U8 II", "AT4120"]
 #                               PROP_SELECT  = ["19x13", "20x13E"]
-MOTOR_SELECT  = None          # None = alle Motoren
+MOTOR_SELECT  = None #["AT4125-250","AX435-B-220", "C6225-200", "C6220-220"]          # None = alle Motoren
 PROP_SELECT   = None          # None = alle Propeller
 
 # --- Grafische Auswertung --------------------------------------------------
@@ -72,7 +72,7 @@ SHOW_PLOTS    = False        # zusaetzlich Fenster oeffnen (plt.show())
 
 # Laufzeit: teure Groessen (Vmax/Standschub/Startschub/Endurance) nur fuer die
 # besten K Kombinationen. None = fuer alle (volles Vmax-Streudiagramm, langsamer).
-HEAVY_METRICS_TOP = 20
+HEAVY_METRICS_TOP = 10
 # ===========================================================================
 
 
