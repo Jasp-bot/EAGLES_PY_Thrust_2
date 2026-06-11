@@ -47,9 +47,9 @@ RESERVE       = 0.20
 KV_MIN        = 100.0         # Motoren: Kv-Bereich [rpm/V]
 KV_MAX        = 400.0
 DMIN_IN       = 12.0          # Propeller: Durchmesserbereich [Zoll]
-DMAX_IN       = 18.0
+DMAX_IN       = 17.0
 PMIN_IN       = None          # Propeller: Steigungsbereich [Zoll]
-PMAX_IN       = 12
+PMAX_IN       = 14
 PD_MIN        = None          # Propeller: P/D-Verhaeltnis (z.B. 0.55 .. 0.75)
 PD_MAX        = None
 BLADES        = 2          # erlaubte Blattzahlen, z.B. [2] oder [2, 3]
@@ -72,7 +72,7 @@ SHOW_PLOTS    = False        # zusaetzlich Fenster oeffnen (plt.show())
 
 # Laufzeit: teure Groessen (Vmax/Standschub/Startschub/Endurance) nur fuer die
 # besten K Kombinationen. None = fuer alle (volles Vmax-Streudiagramm, langsamer).
-HEAVY_METRICS_TOP = 10
+HEAVY_METRICS_TOP = 100
 # ===========================================================================
 
 
