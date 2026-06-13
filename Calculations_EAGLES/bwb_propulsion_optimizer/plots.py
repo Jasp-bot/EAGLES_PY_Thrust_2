@@ -189,7 +189,7 @@ def plot_eta_landscape(plt, airframe, top, pusher_factor, dmin_in, dmax_in,
     rho, V0 = airframe.rho, airframe.v_cruise
     t_prop = airframe.thrust_required(V0) / pusher_factor
     D = np.linspace(dmin_in, dmax_in, 28)
-    Pt = np.linspace(10, 17, 28)
+    Pt = np.linspace(5, 20, 28)
     Z = np.full((len(Pt), len(D)), np.nan)
     for j, d in enumerate(D):
         for i, p in enumerate(Pt):
@@ -201,9 +201,11 @@ def plot_eta_landscape(plt, airframe, top, pusher_factor, dmin_in, dmax_in,
     cf = ax.contourf(D, Pt, Z, levels=14, cmap="viridis")
     fig.colorbar(cf, ax=ax, label="Cruise-Wirkungsgrad η_prop (Schätzer)")
     for pd, ls in ((0.6, ":"), (0.7, "--")):
-        ax.plot(D, pd * D, ls, color="white", lw=1, alpha=0.8)
-        ax.text(D[-1], pd * D[-1], f" P/D={pd}", color="white", fontsize=7,
-                va="center")
+        ax.plot(D, pd * D, ls, color="white", lw=1.2, alpha=0.9)
+        x_lab = D[-1] - 0.9 * (D[-1] - D[0])  # knapp INNERHALB des rechten Randes
+        ax.text(x_lab, pd * x_lab, f"P/D={pd}", color="white", fontsize=7,
+                ha="right", va="bottom", clip_on=True,
+                bbox=dict(boxstyle="round,pad=0.18", fc="black", ec="none", alpha=0.45))
     for c in top:
         d_in = c.prop.diameter_m / IN2M
         p_in = c.prop.pitch_m / IN2M
