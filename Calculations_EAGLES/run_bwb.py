@@ -33,23 +33,43 @@ DATA_DIR   = REPO_ROOT / "data"
 MOTORS_DIR = DATA_DIR / "motors_T_Motor_pusher"
 PROPS_DIR  = DATA_DIR / "propellers"                   # rekursiv (inkl. Unterordner)
 
+# --- Bordnetz / Zellzahl (frei waehlbar, NICHT an 12S gebunden) -------------
+CELLS          = 6           # Zellenzahl (S): z.B. 6, 8, 10, 12, 14
+V_CELL_FULL    = 4.20        # Zellspannung voll  [V] (LiPo-Default)
+V_CELL_NOMINAL = 3.70        # Zellspannung nominal[V]
+V_CELL_EMPTY   = 3.50        # Zellspannung leer  [V] (Cruise-Machbarkeit)
+
+
 # ========================= KONFIG ==========================================
 MASS_KG       = 17.0          # Abflugmasse des BWB-Pushers (inkl. Akku, Motor, Prop, ...), kg
 V_CRUISE      = 20.0        # Reisegeschwindigkeit, m/s (ca. 72 km/h, typisch für kleine E-Flugzeuge)
 V_MAX_TARGET  = 30.0        # maximal erreichbare Fluggeschwindigkeit
-GLIDE_RATIO   = 10.0          # L/D im Reiseflug (Endurance haengt hieran)
+GLIDE_RATIO   = 12.0          # L/D im Reiseflug (Endurance haengt hieran)
 PUSHER_FACTOR = 0.92
 DESIGN_THRUST = 22.0          # konservativer Reserve-/Auslegungsschub (Start/Steig)
-BATTERY_WH    = 816        # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
+BATTERY_WH    = 2 * 17000 * (CELLS * V_CELL_FULL) / 1000       # fuer Flugzeit/Reichweite
 RESERVE       = 0.20
 
+
+
+# --- Vmax-Fenster: Kombi MUSS v_max erreichen, aber max. v_max+Cap ----------
+VMAX_REACH        = True     # Vmax >= v_max erforderlich (erreichen koennen)
+VMAX_CAP_MARGIN   = 10.0     # Obergrenze Loesungsraum = v_max + 10 (None = aus)
+
+# --- Weicher Mindest-Lastpunkt im Cruise (gegen 10%-Throttle) ---------------
+LOAD_MIN            = 0.30   # Ziel-Mindestlastpunkt (30 %)
+LOAD_TOL            = 0.05   # weicher Uebergang +-5 %
+LOAD_PENALTY_WEIGHT = 0.5    # Staerke der Strafe im Score (0 = aus)
+
+# --- Antriebsmasse: NUR Anzeige + Tiebreak bei quasi gleichem Score ---------
+MASS_TIEBREAK     = True
 # --- Filter: Bereiche (None = keine Grenze) --------------------------------
 KV_MIN        = 100.0         # Motoren: Kv-Bereich [rpm/V]
 KV_MAX        = 400.0
 DMIN_IN       = 12.0          # Propeller: Durchmesserbereich [Zoll]
-DMAX_IN       = 17.0
+DMAX_IN       = 18.0
 PMIN_IN       = None          # Propeller: Steigungsbereich [Zoll]
-PMAX_IN       = 14
+PMAX_IN       = 12
 PD_MIN        = None          # Propeller: P/D-Verhaeltnis (z.B. 0.55 .. 0.75)
 PD_MAX        = None
 BLADES        = 2          # erlaubte Blattzahlen, z.B. [2] oder [2, 3]
@@ -72,7 +92,7 @@ SHOW_PLOTS    = False        # zusaetzlich Fenster oeffnen (plt.show())
 
 # Laufzeit: teure Groessen (Vmax/Standschub/Startschub/Endurance) nur fuer die
 # besten K Kombinationen. None = fuer alle (volles Vmax-Streudiagramm, langsamer).
-HEAVY_METRICS_TOP = 100
+HEAVY_METRICS_TOP = 10
 # ===========================================================================
 
 
@@ -124,7 +144,7 @@ def main():
 
     af = Airframe(mass_kg=MASS_KG, v_cruise=V_CRUISE,
                   glide_ratio=GLIDE_RATIO, cd0_fraction=0.5)
-    bat = Battery(cells=12, design_state="empty")   # Cruise-Machbarkeit: worst case
+    bat = Battery(cells=CELLS, v_cell_full=V_CELL_FULL, v_cell_nominal=V_CELL_NOMINAL, v_cell_empty=V_CELL_EMPTY, design_state="empty")   # Cruise-Machbarkeit: worst case
 
     print(f"Quelle      : {src}")
     print(f"Filter      : {filt.summary()}")
@@ -142,7 +162,9 @@ def main():
           f"v_cruise={V_CRUISE:.0f}, v_max-Ziel={V_MAX_TARGET:.0f} m/s")
     print(f"Schub real  : {af.thrust_required(V_CRUISE):.1f} N @cruise "
           f"(= echter aerodyn. Widerstand aus L/D)")
-    print(f"Bordnetz    : 12S (U_voll={bat.v_full:.0f} / U_design={bat.v_design:.0f} V)")
+    print(f"Bordnetz    : {CELLS}S (U_voll={bat.v_full:.0f} / U_design={bat.v_design:.0f} V)")
+    _cap = f"..{V_MAX_TARGET+VMAX_CAP_MARGIN:.0f}" if VMAX_CAP_MARGIN else ""
+    print(f"Vmax-Fenster: {V_MAX_TARGET:.0f}{_cap} m/s  |  Mindest-Lastpunkt {LOAD_MIN*100:.0f}% (+-{LOAD_TOL*100:.0f}%, w={LOAD_PENALTY_WEIGHT})")
     print(f"Akku        : {BATTERY_WH:.0f} Wh, Reserve {RESERVE*100:.0f}%\n")
 
 
@@ -151,6 +173,10 @@ def main():
                          v_max_target=V_MAX_TARGET, pusher_factor=PUSHER_FACTOR,
                          filters=filt, design_thrust=DESIGN_THRUST,
                          battery_wh=BATTERY_WH, reserve=RESERVE,
+                         vmax_reach=VMAX_REACH, vmax_cap_margin=VMAX_CAP_MARGIN,
+                         load_min=LOAD_MIN, load_tol=LOAD_TOL,
+                         load_penalty_weight=LOAD_PENALTY_WEIGHT,
+                         mass_tiebreak=MASS_TIEBREAK,
                          heavy_metrics_top=HEAVY_METRICS_TOP,
                          progress=True, top_n=None)   # alle -> Streudiagramme
     cands = cands_all[:10]

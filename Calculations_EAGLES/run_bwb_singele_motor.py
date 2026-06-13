@@ -43,6 +43,12 @@ DESIGN_THRUST = 22.0          # konservativer Reserve-/Auslegungsschub (Start/St
 BATTERY_WH    = 816        # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
 RESERVE       = 0.20
 
+
+# --- Bordnetz / Zellzahl (frei waehlbar) -----------------------------------
+CELLS          = 12
+V_CELL_FULL    = 4.20
+V_CELL_NOMINAL = 3.70
+V_CELL_EMPTY   = 3.50
 # --- Filter: Bereiche (None = keine Grenze) --------------------------------
 KV_MIN        = 100.0         # Motoren: Kv-Bereich [rpm/V]
 KV_MAX        = 300.0
@@ -124,7 +130,7 @@ def main():
 
     af = Airframe(mass_kg=MASS_KG, v_cruise=V_CRUISE,
                   glide_ratio=GLIDE_RATIO, cd0_fraction=0.5)
-    bat = Battery(cells=12, design_state="empty")   # Cruise-Machbarkeit: worst case
+    bat = Battery(cells=CELLS, v_cell_full=V_CELL_FULL, v_cell_nominal=V_CELL_NOMINAL, v_cell_empty=V_CELL_EMPTY, design_state="empty")   # Cruise-Machbarkeit: worst case
 
     print(f"Quelle      : {src}")
     print(f"Filter      : {filt.summary()}")
@@ -149,6 +155,8 @@ def main():
 
     cands_all = optimize(motors, props, af, bat,
                          v_max_target=V_MAX_TARGET, pusher_factor=PUSHER_FACTOR,
+                         vmax_reach=False, vmax_cap_margin=None,   # manuell: nicht filtern
+                         load_penalty_weight=0.0, mass_tiebreak=True,
                          filters=filt, design_thrust=DESIGN_THRUST,
                          battery_wh=BATTERY_WH, reserve=RESERVE,
                          heavy_metrics_top=HEAVY_METRICS_TOP,

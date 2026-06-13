@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Battery:
-    cells: int = 12 # Cell voltage in c
+    cells: int = 12
     v_cell_full: float = 4.20
     v_cell_nominal: float = 3.70
     v_cell_empty: float = 3.50      # konservatives Spannungsende (Li-Ion)

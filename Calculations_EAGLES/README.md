@@ -161,6 +161,34 @@ der grobe Glockenkurven-Schätzer (klar als Näherung markiert).
 realen aerodynamischen Widerstand (L/D), Reserve (Start, Vmax) gegen die
 Vollgas-Fähigkeit. `design_thrust` setzt den konservativen Bezug für den Lastpunkt.
 
+## Ranking- & Auslegungs-Regeln (v0.6)
+
+Das Ranking ist nicht mehr reine Cruise-Effizienz, sondern bestraft/filtert
+überdimensionierte Kombinationen (die sonst bei ~10 % Gas liefen):
+
+- **Spannung frei**: `CELLS` (Zellenzahl) und optional `V_CELL_FULL/NOMINAL/EMPTY`
+  in `run_bwb.py` — nicht mehr an 12S gebunden. Kv-Match, Vmax und Strom hängen
+  direkt daran.
+- **Vmax-Fenster (hart)**: eine Kombination muss `v_max` bei Vollgas erreichen
+  und darf höchstens `v_max + VMAX_CAP_MARGIN` (Default 10 m/s) schnell sein.
+  Damit fallen massiv überdrehende/überdimensionierte Antriebe aus dem
+  Lösungsraum. (`VMAX_REACH`, `VMAX_CAP_MARGIN`)
+- **Weicher Mindest-Lastpunkt**: fällt der Motor-Lastpunkt im Cruise unter
+  `LOAD_MIN` (Default 30 %, weicher Übergang ±`LOAD_TOL` = 5 %), wird der
+  Ranking-Score multiplikativ bestraft (`Score x(1+w·shortfall)`,
+  `w = LOAD_PENALTY_WEIGHT`). Keine harte Ausschlussgrenze — gut ausgelegte
+  Kombinationen steigen einfach nach oben. Die Tabelle zeigt `... Score x1.50`
+  in den Notizen, wenn die Strafe greift.
+- **Antriebsmasse (Motor + Rotor)**: nur Anzeige (`Masse`-Spalte) und Tiebreak —
+  bei quasi gleichem Score (±1 %) gewinnt die leichtere Kombination
+  (`MASS_TIEBREAK`). Geht NICHT in die Zielfunktion ein.
+
+Vmax und Lastpunkt sind damit Filter-/Ranking-Kriterien und werden für **alle**
+machbaren Kombinationen berechnet (zweiter Fortschrittsbalken „Vmax/Last"). Das
+ist langsamer als die alte Top-K-Abkürzung; die Filter (Kv/Durchmesser/Hersteller)
+halten die Menge klein. `run_bwb_singele_motor.py` (manueller Abgleich) hat
+Fenster und Strafe bewusst **aus**, zeigt also jede gewählte Kombination roh.
+
 ## Modellgleichungen (unverändert gültig)
 
 Zelle: `T_cruise = m·g/(L/D)`, Widerstand über v in parasitär (∝v²) + induziert (∝1/v²).
