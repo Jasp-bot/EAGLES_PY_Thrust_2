@@ -16,11 +16,12 @@ from .optimizer import optimize, format_table, Candidate, filter_components
 from .filters import Filters
 from .progress import ProgressBar
 from .plots import make_plots
+from .report import Reporter, next_run_dir
 from .database import (load_motor_json, load_propeller_json,
                        load_motors_dir, load_props_dir, load_motors_csv,
                        example_motors, example_props)
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 __all__ = [
     "Airframe", "Battery", "Motor",
     "BasePropeller", "MeasuredPropeller", "EstimatedPropeller",
@@ -28,7 +29,7 @@ __all__ = [
     "evaluate", "OperatingPoint", "vmax", "static_max_thrust",
     "full_throttle_point", "endurance", "ideal_kv",
     "optimize", "format_table", "Candidate", "filter_components", "Filters",
-    "ProgressBar", "make_plots",
+    "ProgressBar", "make_plots", "Reporter", "next_run_dir",
     "load_motor_json", "load_propeller_json", "load_motors_dir",
     "load_props_dir", "load_motors_csv", "example_motors", "example_props",
 ]

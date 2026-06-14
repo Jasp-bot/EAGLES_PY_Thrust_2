@@ -161,6 +161,23 @@ der grobe Glockenkurven-Schätzer (klar als Näherung markiert).
 realen aerodynamischen Widerstand (L/D), Reserve (Start, Vmax) gegen die
 Vollgas-Fähigkeit. `design_thrust` setzt den konservativen Bezug für den Lastpunkt.
 
+## Ergebnisse speichern (Results/)
+
+Jeder Lauf legt unter `Results/` einen neuen, durchnummerierten Unterordner an
+(`run_001_<Datum>`, `run_002_<Datum>`, …) — so lassen sich Iterationen und
+Varianten direkt vergleichen. Im Ordner liegen:
+
+- die **6 Plots** des Laufs, und
+- **`results.txt`** mit der kompletten Konsolenausgabe: zuerst ein
+  `== Konfiguration ==`-Block (alle Eckdaten, Filter, Spannung, Vmax-Fenster,
+  Lastpunkt-Strafe, Pfade) für die Reproduzierbarkeit, dann das Ranking und die
+  Top-Kombination im Detail.
+
+Fortschrittsbalken und Plot-Status (`[k/6] …`) landen bewusst **nicht** in der
+Textdatei. Die Nummerierung zählt automatisch hoch (höchste vorhandene Nummer
++ 1). Steuerbar ist nur, ob Plots erzeugt werden (`MAKE_PLOTS`); der Ordner und
+`results.txt` entstehen immer.
+
 ## Ranking- & Auslegungs-Regeln (v0.6)
 
 Das Ranking ist nicht mehr reine Cruise-Effizienz, sondern bestraft/filtert
