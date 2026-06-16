@@ -1,0 +1,55 @@
+BWB Propulsion Optimizer - Lauf 002
+===================================
+
+Lauf #002    2026-06-14 09:51
+
+== Konfiguration ==
+  Flugzeug : MASS_KG=17.0  V_CRUISE=20.0  V_MAX_TARGET=30.0  GLIDE_RATIO=10.0  PUSHER_FACTOR=0.92
+  Schub/Akku: DESIGN_THRUST=22.0  BATTERY_WH=816  RESERVE=0.2
+  Bordnetz : CELLS=12  V_CELL=4.2/3.7/3.5
+  Filter   : Kv 100-400 | D 12-18" | P 0-12" | Blatt ['2']
+  Vmax     : REACH=True  CAP_MARGIN=10.0
+  Lastpunkt: MIN=0.3  TOL=0.05  WEIGHT=0.5
+  Sonstiges: MASS_TIEBREAK=True  HEAVY_METRICS_TOP=10
+  Pfade    : C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\motors_T_Motor_pusher  |  C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\propellers
+
+== Lauf ==
+Quelle      : PyThrust-DB (Repo): C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\motors_T_Motor_pusher / C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\propellers
+Filter      : Kv 100-400 | D 12-18" | P 0-12" | Blatt ['2']
+Bestand     : 42 Motoren x 121 Propeller = 5082 Kombinationen
+Prop-D      : 12.0"..18.0" | Hersteller: APC
+Motoren     : Hersteller: Hobbywing, T-Motor
+Flugzeug    : 17 kg, L/D=10, v_cruise=20, v_max-Ziel=30 m/s
+Schub real  : 16.7 N @cruise (= echter aerodyn. Widerstand aus L/D)
+Bordnetz    : 12S (U_voll=50 / U_design=42 V)
+Vmax-Fenster: 30..40 m/s  |  Mindest-Lastpunkt 30% (+-5%, w=0.5)
+Akku        : 816 Wh, Reserve 20%
+
+Ranking nach el. Cruise-Leistung (kleiner = effizienter):
+
+ # Motor       Prop        ηges  P_cr    I Vmax  Last  Masse   Kv Kvid Tstat
+----------------------------------------------------------------------------
+ 1 AT4120-250  13x8E       0.59   569   16   34   36%   305g  250  203    61
+ 2 AT4125-250  13x8E       0.59   567   16   34   36%   350g  250  203    62
+ 3 AX435-A-220 13.5x10     0.59   569   17   36   36%   480g  220  173    62
+ 4 AX435-A-220 14x8.5E     0.59   567   16   33   36%   480g  220  185    62
+ 5 AX435-B-220 13.5x10     0.59   569   17   36   36%   485g  220  173    62
+ 6 AX435-B-220 14x8.5E     0.59   567   16   33   36%   485g  220  185    62
+ 7 AT4125-250  13x8        0.58   573   16   34   36%   350g  250  202    61
+ 8 AT4130-230  13x10E      0.58   575   17   36   39%   408g  230  180    57
+ 9 AX435-A-220 13.5x9      0.58   575   16   33   40%   480g  220  186    55
+10 AX435-A-220 13x10E      0.58   572   16   35   41%   480g  220  180    53
+
+--- Top-Kombination im Detail ------------------------------------
+  AT4120-250 (T-Motor) + 13x8E (APC)
+  Mass   : 305 g (Motor+Rotor)
+  Cruise : 16.7 N @ 8510 rpm, J=0.43, eta_prop=0.70, eta_ges=0.59
+  Strom  : 16.1 A @12S
+  Last   : Cruise 36% von 61 N Standschub (Ziel >= 30%)
+  Kv     : Motor 250, ideal ~203 (Vmax 34 m/s)
+  Start  : 61 N statisch, 53 N @14 m/s (Bungee-Exit)
+  Flugzeit ~1.1 h, Reichweite ~83 km (bei L/D=10, 816 Wh, 20% Reserve)
+
+Spalten: ηges=Gesamtwirkungsgrad  P_cr=el.Leistung[W]  I=Strom[A]  Vmax[m/s]  Last=Lastpunkt  Masse=Motor+Rotor  Kv/Kvid=ist/ideal  Tstat=Standschub[N]
+
+Plots (6) im Run-Ordner gespeichert.
