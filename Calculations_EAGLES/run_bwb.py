@@ -35,6 +35,12 @@ DATA_DIR   = REPO_ROOT / "data"
 MOTORS_DIR = DATA_DIR / "motors_T_Motor_pusher"
 PROPS_DIR  = DATA_DIR / "propellers"                   # rekursiv (inkl. Unterordner)
 
+# --- Bordnetz / Zellzahl (frei waehlbar, NICHT an 12S gebunden) -------------
+CELLS          = 6          # Zellenzahl (S): z.B. 6, 8, 10, 12, 14
+V_CELL_FULL    = 4.20        # Zellspannung voll  [V] (LiPo-Default)
+V_CELL_NOMINAL = 3.70        # Zellspannung nominal[V]
+V_CELL_EMPTY   = 3.50        # Zellspannung leer  [V] (Cruise-Machbarkeit)
+
 # ========================= KONFIG ==========================================
 MASS_KG       = 17.0          # Abflugmasse des BWB-Pushers (inkl. Akku, Motor, Prop, ...), kg
 V_CRUISE      = 20.0        # Reisegeschwindigkeit, m/s (ca. 72 km/h, typisch für kleine E-Flugzeuge)
@@ -42,15 +48,9 @@ V_MAX_TARGET  = 30.0        # maximal erreichbare Fluggeschwindigkeit
 GLIDE_RATIO   = 10.0          # L/D im Reiseflug (Endurance haengt hieran)
 PUSHER_FACTOR = 0.92
 DESIGN_THRUST = 22.0          # konservativer Reserve-/Auslegungsschub (Start/Steig)
-BATTERY_WH    = 816        # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
+BATTERY_WH    = 2 * 17000 * (CELLS *V_CELL_FULL)/1000       # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
 RESERVE       = 0.20
 
-
-# --- Bordnetz / Zellzahl (frei waehlbar, NICHT an 12S gebunden) -------------
-CELLS          = 6          # Zellenzahl (S): z.B. 6, 8, 10, 12, 14
-V_CELL_FULL    = 4.20        # Zellspannung voll  [V] (LiPo-Default)
-V_CELL_NOMINAL = 3.70        # Zellspannung nominal[V]
-V_CELL_EMPTY   = 3.50        # Zellspannung leer  [V] (Cruise-Machbarkeit)
 
 # --- Vmax-Fenster: Kombi MUSS v_max erreichen, aber max. v_max+Cap ----------
 VMAX_REACH        = True     # Vmax >= v_max erforderlich (erreichen koennen)
@@ -65,11 +65,11 @@ LOAD_PENALTY_WEIGHT = 0.5    # Staerke der Strafe im Score (0 = aus)
 MASS_TIEBREAK     = True
 # --- Filter: Bereiche (None = keine Grenze) --------------------------------
 KV_MIN        = 100.0         # Motoren: Kv-Bereich [rpm/V]
-KV_MAX        = 500.0
-DMIN_IN       = 12.0          # Propeller: Durchmesserbereich [Zoll]
+KV_MAX        = 300.0
+DMIN_IN       = 16.0          # Propeller: Durchmesserbereich [Zoll]
 DMAX_IN       = 20.0
 PMIN_IN       = None          # Propeller: Steigungsbereich [Zoll]
-PMAX_IN       = 12
+PMAX_IN       = None
 PD_MIN        = None          # Propeller: P/D-Verhaeltnis (z.B. 0.55 .. 0.75)
 PD_MAX        = None
 BLADES        = 2          # erlaubte Blattzahlen, z.B. [2] oder [2, 3]
@@ -83,8 +83,8 @@ PROP_MFR      = None          # z.B. ["APC", "Aeronaut"]
 # --- Filter: gezielte Einzelauswahl (Name/ID-Teilstring, Liste) ------------
 # Beispiel manueller Abgleich:  MOTOR_SELECT = ["U8 II", "AT4120"]
 #                               PROP_SELECT  = ["19x13", "20x13E"]
-MOTOR_SELECT  = None #["AT4125-250","AX435-B-220", "C6225-200", "C6220-220"]          # None = alle Motoren
-PROP_SELECT   = None          # None = alle Propeller
+MOTOR_SELECT  = "AT4130-300" #["AT4125-250","AX435-B-220", "C6225-200", "C6220-220"]          # None = alle Motoren
+PROP_SELECT   = "17x12E"          # None = alle Propeller
 
 # --- Grafische Auswertung --------------------------------------------------
 MAKE_PLOTS    = True          # Plots der Top 5 erzeugen (braucht matplotlib)
