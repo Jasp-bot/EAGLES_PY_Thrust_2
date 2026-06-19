@@ -1,0 +1,32 @@
+BWB Propulsion Optimizer - Lauf 003
+===================================
+
+Lauf #003    2026-06-18 13:02
+
+== Konfiguration ==
+  Flugzeug : MASS_KG=17.0  V_CRUISE=20.0  V_MAX_TARGET=30.0  GLIDE_RATIO=10.0  PUSHER_FACTOR=0.92
+  Schub/Akku: DESIGN_THRUST=22.0  BATTERY_WH=856.8000000000001  RESERVE=0.2
+  Bordnetz : CELLS=6  V_CELL=4.2/3.7/3.5
+  Filter   : Kv 100-400 | D 16-20" | Blatt ['2'] | MotorHersteller ['Planet-Hobby']
+  Vmax     : REACH=True  CAP_MARGIN=10.0
+  Lastpunkt: MIN=0.25  TOL=0.05  WEIGHT=0.5
+  Sonstiges: MASS_TIEBREAK=True  HEAVY_METRICS_TOP=10
+  Pfade    : C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\motors_T_Motor_pusher  |  C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\propellers
+
+== Lauf ==
+Quelle      : Fallback: SYNTHETISCHE Beispieldaten (data/ nicht nutzbar)
+Filter      : Kv 100-400 | D 16-20" | Blatt ['2'] | MotorHersteller ['Planet-Hobby']
+Bestand     : 6 Motoren x 6 Propeller = 36 Kombinationen
+Prop-D      : 16.0"..20.0" | Hersteller: ?
+Motoren     : Hersteller: ?
+Flugzeug    : 17 kg, L/D=10, v_cruise=20, v_max-Ziel=30 m/s
+Schub real  : 16.7 N @cruise (= echter aerodyn. Widerstand aus L/D)
+Bordnetz    : 6S (U_voll=25 / U_design=21 V)
+Vmax-Fenster: 30..40 m/s  |  Mindest-Lastpunkt 25% (+-5%, w=0.5)
+Akku        : 857 Wh, Reserve 20%
+
+Ranking nach el. Cruise-Leistung (kleiner = effizienter):
+
+Keine Kombination erfuellt alle Bedingungen. Moegliche Ursachen: Vmax-Fenster (v_max..v_max+Cap) zu eng oder keine Kombi erreicht v_max; Filter (Kv/Durchmesser/Hersteller) zu streng; Spannung/12S; Motor-Grenzen (i_max/p_max). Tipp: Zellzahl, vmax_cap_margin oder die Filter anpassen.
+
+Spalten: ηges=Gesamtwirkungsgrad  P_cr=el.Leistung[W]  I=Strom[A]  Vmax[m/s]  Last=Lastpunkt  Masse=Motor+Rotor  Kv/Kvid=ist/ideal  Tstat=Standschub[N]

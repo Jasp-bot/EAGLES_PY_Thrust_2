@@ -1,0 +1,55 @@
+BWB Propulsion Optimizer - Lauf 005
+===================================
+
+Lauf #005    2026-06-18 13:05
+
+== Konfiguration ==
+  Flugzeug : MASS_KG=17.0  V_CRUISE=20.0  V_MAX_TARGET=30.0  GLIDE_RATIO=10.0  PUSHER_FACTOR=0.92
+  Schub/Akku: DESIGN_THRUST=22.0  BATTERY_WH=856.8000000000001  RESERVE=0.2
+  Bordnetz : CELLS=6  V_CELL=4.2/3.7/3.5
+  Filter   : Kv 100-400 | D 16-20" | Blatt ['2'] | MotorHersteller ['Planet-Hobby']
+  Vmax     : REACH=True  CAP_MARGIN=10.0
+  Lastpunkt: MIN=0.3  TOL=0.05  WEIGHT=0.5
+  Sonstiges: MASS_TIEBREAK=True  HEAVY_METRICS_TOP=10
+  Pfade    : C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\motors  |  C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\propellers
+
+== Lauf ==
+Quelle      : PyThrust-DB (Repo): C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\motors / C:\Users\jaspe\Python_Projects_Jasper\EAGLES_PY_Thrust_2\data\propellers
+Filter      : Kv 100-400 | D 16-20" | Blatt ['2'] | MotorHersteller ['Planet-Hobby']
+Bestand     : 8 Motoren x 68 Propeller = 544 Kombinationen
+Prop-D      : 16.0"..20.0" | Hersteller: APC
+Motoren     : Hersteller: Planet-Hobby
+Flugzeug    : 17 kg, L/D=10, v_cruise=20, v_max-Ziel=30 m/s
+Schub real  : 16.7 N @cruise (= echter aerodyn. Widerstand aus L/D)
+Bordnetz    : 6S (U_voll=25 / U_design=21 V)
+Vmax-Fenster: 30..40 m/s  |  Mindest-Lastpunkt 30% (+-5%, w=0.5)
+Akku        : 857 Wh, Reserve 20%
+
+Ranking nach el. Cruise-Leistung (kleiner = effizienter):
+
+ # Motor       Prop        ηges  P_cr    I Vmax  Last  Masse   Kv Kvid Tstat
+----------------------------------------------------------------------------
+ 1 Joker 6360-10 V3 20x15C      0.66   506   27   31   37%   640g  225  188    59
+ 2 Joker 6360-8 V3 18x14       0.65   512   30   35   35%   640g  280  218    62
+ 3 Joker 6360-11 V3 20x22.5EP   0.65   510   32   36   37%   640g  205  144    60
+ 4 Joker 6350-10 V3 16x12E      0.65   517   27   31   43%   510g  300  264    51
+ 5 Joker 6350-10 V3 17x12E      0.65   514   29   32   35%   510g  300  249    63
+ 6 Joker 6360-8 V3 17x12E      0.65   516   27   30   39%   640g  280  249    56
+ 7 Joker 6360-8 V3 18x12       0.65   516   28   32   36%   640g  280  238    61
+ 8 Joker 5060-9 V3 17x12E      0.64   520   27   30   39%   380g  290  249    56
+ 9 Joker 5060-9 V3 18x12       0.64   522   29   32   36%   380g  290  238    61
+10 Joker 5060-9 V3 18x14       0.64   521   31   34   36%   380g  290  218    61
+
+--- Top-Kombination im Detail ------------------------------------
+  Joker 6360-10 V3 (Planet-Hobby) + 20x15C (APC)
+  Mass   : 640 g (Motor+Rotor)
+  Cruise : 16.7 N @ 3953 rpm, J=0.60, eta_prop=0.78, eta_ges=0.66
+  Strom  : 27.3 A @6S
+  Last   : Cruise 37% von 59 N Standschub (Ziel >= 30%)
+  Kv     : Motor 225, ideal ~188 (Vmax 31 m/s)
+  Start  : 59 N statisch, 51 N @14 m/s (Bungee-Exit)
+  Flugzeit ~1.4 h, Reichweite ~97 km (bei L/D=10, 857 Wh, 20% Reserve)
+
+Spalten: ηges=Gesamtwirkungsgrad  P_cr=el.Leistung[W]  I=Strom[A]  Vmax[m/s]  Last=Lastpunkt  Masse=Motor+Rotor  Kv/Kvid=ist/ideal  Tstat=Standschub[N]
+
+Plots (6) im Run-Ordner gespeichert.

@@ -65,9 +65,9 @@ LOAD_PENALTY_WEIGHT = 0.5    # Staerke der Strafe im Score (0 = aus)
 MASS_TIEBREAK     = True
 # --- Filter: Bereiche (None = keine Grenze) --------------------------------
 KV_MIN        = 100.0         # Motoren: Kv-Bereich [rpm/V]
-KV_MAX        = 300.0
+KV_MAX        = 400.0
 DMIN_IN       = 16.0          # Propeller: Durchmesserbereich [Zoll]
-DMAX_IN       = 20.0
+DMAX_IN       = 18.0
 PMIN_IN       = None          # Propeller: Steigungsbereich [Zoll]
 PMAX_IN       = None
 PD_MIN        = None          # Propeller: P/D-Verhaeltnis (z.B. 0.55 .. 0.75)
@@ -84,7 +84,7 @@ PROP_MFR      = None          # z.B. ["APC", "Aeronaut"]
 # Beispiel manueller Abgleich:  MOTOR_SELECT = ["U8 II", "AT4120"]
 #                               PROP_SELECT  = ["19x13", "20x13E"]
 MOTOR_SELECT  = "AT4130-300" #["AT4125-250","AX435-B-220", "C6225-200", "C6220-220"]          # None = alle Motoren
-PROP_SELECT   = "17x12E"          # None = alle Propeller
+PROP_SELECT   = None #"17x12E"          # None = alle Propeller
 
 # --- Grafische Auswertung --------------------------------------------------
 MAKE_PLOTS    = True          # Plots der Top 5 erzeugen (braucht matplotlib)
