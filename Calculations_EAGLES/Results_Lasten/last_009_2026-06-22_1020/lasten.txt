@@ -1,0 +1,71 @@
+Motorbefestigung - Lastberechnung (Lauf 009)
+============================================
+
+Lastberechnung Motorbefestigung   (Lauf #009)
+2026-06-22 10:20
+
+== Bauteile ==
+  Motor / Rotor : AT4130-300 / 17x12E
+  Masse Motor   : 405.4 g
+  Masse Rotor   : 70.0 g
+  Masse gesamt  : 475.4 g  (Punktmasse fuer Manoever)
+  D_prop        : 17.0 in  = 0.432 m
+
+== Geometrie / Schrauben ==
+  l_SP          : 0.668 m  (SP -> Halterung)
+  e_x (Ueberhang): 60.0 mm  (Schraubenebene -> CG)
+  Schrauben     : 4 Stk auf r = 10.0 mm (Ebene y-z)
+
+== Drehzahl / Rotor-Traegheit ==
+  rpm Vollgas   : 7000 min^-1
+  SF (nur rpm)  : x1.50  ->  10500 min^-1  (omega = 1100 rad/s)
+  I_p (Stab)    : 1.0876e-03 kg m^2   (ROD_COEFF=0.0833)
+  I_t           : 5.4382e-04 kg m^2   (I_t = 0.5*I_p)
+  Drehimpuls H  : 1.196 kg m^2/s
+  Schub (axial) : 61.0 N  (worst case, ohne SF)
+
+== Lastfall A: Abfangbogen  (v=40 m/s, n=3.0) ==
+  Nickrate q   : 0.4903 rad/s  (28.1 deg/s), qd = 0
+  M_y (Nick, Traegheit) :     0.84 N m
+  M_z (Gier, Kreisel)   :     0.59 N m
+  M_res = sqrt(My^2+Mz^2):     1.02 N m
+  Normalkraft F_z       :    13.99 N
+  -> Schraube Zug (max) :    66.44 N  (kritische Schraube)
+  -> Schraube Quer      :     3.50 N
+  -> Schraube kombiniert:    66.53 N
+
+== Lastfall B: Anstellwinkelschwingung  (dalpha=26.0 deg, T=1.20 s) ==
+  q_max  : 2.3760 rad/s  (136.1 deg/s)
+  qd_max : 12.4408 rad/s^2
+  Lastvielfaches n_max ~ 1.85 (periodenabhaengig, kinematisch)
+  -- Maxima ueber eine Periode --
+  |M_y|_max :     0.52 N m
+  |M_z|_max :     2.84 N m
+  -- kritische Phase (max. M_res, t=1.198 s) --
+  M_y (Nick, Traegheit) :     0.28 N m
+  M_z (Gier, Kreisel)   :     2.84 N m
+  M_res = sqrt(My^2+Mz^2):     2.86 N m
+  Normalkraft F_z       :     4.70 N
+  -> Schraube Zug (max) :   158.02 N  (kritische Schraube)
+  -> Schraube Quer      :     1.17 N
+  -> Schraube kombiniert:   158.02 N
+
+== Lastfall C: 1-cos-Nickpuls  (dalpha=26.0 deg, T=1.20 s) ==
+  qd_max : 6.2204 rad/s^2  (halbe Schwingungsamplitude)
+  -- kritische Phase (t=0.297 s) --
+  M_y (Nick, Traegheit) :     0.28 N m
+  M_z (Gier, Kreisel)   :     1.42 N m
+  M_res = sqrt(My^2+Mz^2):     1.45 N m
+  Normalkraft F_z       :     4.69 N
+  -> Schraube Zug (max) :    87.66 N  (kritische Schraube)
+  -> Schraube Quer      :     1.17 N
+  -> Schraube kombiniert:    87.67 N
+
+== AUSLEGUNG (Worst Case ueber alle Lastfaelle) ==
+  massgebender Lastfall : Schwingung
+  M_y / M_z             : 0.28 / 2.84 N m
+  M_res                 : 2.86 N m
+  Schraubenzug  (max)   : 158.02 N
+  Schraubenquer (max)   : 1.17 N
+
+Hinweise: SF wirkt nur auf die Drehzahl (Kreisel). Schub erzeugt kein Nickmoment (x=Symmetrieebene); er geht nur axial in die Schrauben. Rotor als Stabmodell (I_p=m*D^2/12). M_z=Kreisel (Gier), M_y=Traegheit (Nick).
