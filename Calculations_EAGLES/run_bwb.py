@@ -43,9 +43,9 @@ V_CELL_EMPTY   = 3.50        # Zellspannung leer  [V] (Cruise-Machbarkeit)
 
 # ========================= KONFIG ==========================================
 MASS_KG       = 17.0          # Abflugmasse des BWB-Pushers (inkl. Akku, Motor, Prop, ...), kg
-V_CRUISE      = 20.0        # Reisegeschwindigkeit, m/s (ca. 72 km/h, typisch für kleine E-Flugzeuge)
+V_CRUISE      = 20       # Reisegeschwindigkeit, m/s (ca. 72 km/h 20m/s, typisch für kleine E-Flugzeuge)
 V_MAX_TARGET  = 30.0        # maximal erreichbare Fluggeschwindigkeit
-GLIDE_RATIO   = 10.0          # L/D im Reiseflug (Endurance haengt hieran)
+GLIDE_RATIO   = 12.0          # L/D im Reiseflug (Endurance haengt hieran)
 PUSHER_FACTOR = 0.92
 DESIGN_THRUST = 22.0          # konservativer Reserve-/Auslegungsschub (Start/Steig)
 BATTERY_WH    = 2 * 17000 * (CELLS *V_CELL_FULL)/1000       # ~ >30 Ah @ 12S; fuer Flugzeit/Reichweite
@@ -54,7 +54,7 @@ RESERVE       = 0.20
 
 # --- Vmax-Fenster: Kombi MUSS v_max erreichen, aber max. v_max+Cap ----------
 VMAX_REACH        = True     # Vmax >= v_max erforderlich (erreichen koennen)
-VMAX_CAP_MARGIN   = 10.0     # Obergrenze Loesungsraum = v_max + 10 (None = aus)
+VMAX_CAP_MARGIN   = 5 #10.0     # Obergrenze Loesungsraum = v_max + 10 (None = aus)
 
 # --- Weicher Mindest-Lastpunkt im Cruise (gegen 10%-Throttle) ---------------
 LOAD_MIN            = 0.30   # Ziel-Mindestlastpunkt (30 %)
@@ -65,7 +65,7 @@ LOAD_PENALTY_WEIGHT = 0.5    # Staerke der Strafe im Score (0 = aus)
 MASS_TIEBREAK     = True
 # --- Filter: Bereiche (None = keine Grenze) --------------------------------
 KV_MIN        = 100.0         # Motoren: Kv-Bereich [rpm/V]
-KV_MAX        = 400.0
+KV_MAX        = 500.0
 DMIN_IN       = 16.0          # Propeller: Durchmesserbereich [Zoll]
 DMAX_IN       = 18.0
 PMIN_IN       = None          # Propeller: Steigungsbereich [Zoll]
@@ -83,7 +83,7 @@ PROP_MFR      = None          # z.B. ["APC", "Aeronaut"]
 # --- Filter: gezielte Einzelauswahl (Name/ID-Teilstring, Liste) ------------
 # Beispiel manueller Abgleich:  MOTOR_SELECT = ["U8 II", "AT4120"]
 #                               PROP_SELECT  = ["19x13", "20x13E"]
-MOTOR_SELECT  = "AT4130-300" #["AT4125-250","AX435-B-220", "C6225-200", "C6220-220"]          # None = alle Motoren
+MOTOR_SELECT  = "AT4130-450" #["AT4130-300","AT4130-450"]  #"AT4130-300" #["AT4125-250","AX435-B-220", "C6225-200", "C6220-220"]          # None = alle Motoren
 PROP_SELECT   = None #"17x12E"          # None = alle Propeller
 
 # --- Grafische Auswertung --------------------------------------------------
