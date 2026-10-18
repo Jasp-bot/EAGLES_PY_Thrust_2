@@ -1,0 +1,64 @@
+BWB Propulsion Optimizer - Lauf 026
+===================================
+
+Lauf #026    2026-10-18 22:12
+
+== Konfiguration ==
+  Flugzeug : MASS_KG=17.0  V_CRUISE=20  V_MAX_TARGET=30.0  GLIDE_RATIO=12.0  PUSHER_FACTOR=0.92
+  Schub/Akku: DESIGN_THRUST=22.0  BATTERY_WH=856.8000000000001  RESERVE=0.2
+  Bordnetz : CELLS=6  V_CELL=4.2/3.7/3.5
+  Filter   : Kv 100-500 | D 15-18" | Blatt ['2'] | nur Motoren ['AT4130-450']
+  Vmax     : REACH=True  CAP_MARGIN=50
+  Lastpunkt: MIN=0.3  TOL=0.05  WEIGHT=0.5
+  Sonstiges: MASS_TIEBREAK=True  HEAVY_METRICS_TOP=10
+  Pfade    : C:\Users\jaspe\OneDrive\UNI\Project X\06 Antrieb\PY_Thrust_2\data\motors_T_Motor_pusher  |  C:\Users\jaspe\OneDrive\UNI\Project X\06 Antrieb\PY_Thrust_2\data\propellers
+
+== Lauf ==
+Quelle      : PyThrust-DB (Repo): C:\Users\jaspe\OneDrive\UNI\Project X\06 Antrieb\PY_Thrust_2\data\motors_T_Motor_pusher / C:\Users\jaspe\OneDrive\UNI\Project X\06 Antrieb\PY_Thrust_2\data\propellers
+Filter      : Kv 100-500 | D 15-18" | Blatt ['2'] | nur Motoren ['AT4130-450']
+Bestand     : 1 Motoren x 59 Propeller = 59 Kombinationen
+Prop-D      : 15.0"..18.0" | Hersteller: APC
+Motoren     : Hersteller: T-Motor
+Flugzeug    : 17 kg, L/D=12, v_cruise=20, v_max-Ziel=30 m/s
+Schub real  : 13.9 N @cruise (= echter aerodyn. Widerstand aus L/D)
+Bordnetz    : 6S (U_voll=25 / U_design=21 V)
+Vmax-Fenster: 30..80 m/s  |  Mindest-Lastpunkt 30% (+-5%, w=0.5)
+Akku        : 857 Wh, Reserve 20%
+
+Ranking nach el. Cruise-Leistung (kleiner = effizienter):
+
+ # Motor       Prop        ηges  P_cr    I Vmax  Last  Masse   Kv Kvid Tstat
+----------------------------------------------------------------------------
+ 1 AT4130-450  15x7E       0.57   487   28   32   30%   408g  450  368    72
+ 2 AT4130-450  15x8E       0.59   471   29   36   28%   408g  450  339    78
+   -> Teillast 28% (<30%, Score x1.33)
+ 3 AT4130-450  15x6        0.55   507   28   31   30%   408g  450  383    74
+   -> Teillast 30% (<30%, Score x1.26)
+ 4 AT4130-450  15x10E      0.61   455   32   41   26%   408g  450  296    84
+   -> Teillast 26% (<30%, Score x1.44)
+ 5 AT4130-450  15x12E      0.62   450   35   46   25%   408g  450  266    86
+   -> Teillast 25% (<30%, Score x1.48) | Kv>>ideal
+ 6 AT4130-450  16x12E      0.62   445   36   48   21%   408g  450  250   106
+   -> Teillast 21% (<30%, Score x1.50) | Kv>>ideal
+ 7 AT4130-450  17x12E      0.63   444   38   50   17%   408g  450  237   128
+   -> Teillast 17% (<30%, Score x1.50) | Kv>>ideal
+ 8 AT4130-450  18x12E      0.62   445   40   51   15%   408g  450  225   151
+   -> Teillast 15% (<30%, Score x1.50) | Kv>>ideal
+ 9 AT4130-450  18x14       0.63   443   43   56   16%   408g  450  207   136
+   -> Teillast 16% (<30%, Score x1.50) | Kv>>ideal
+10 AT4130-450  16x13       0.62   449   39   51   19%   408g  450  231   118
+   -> Teillast 19% (<30%, Score x1.50) | Kv>>ideal
+
+--- Top-Kombination im Detail ------------------------------------
+  AT4130-450 (T-Motor) + 15x7E (APC)
+  Mass   : 408 g (Motor+Rotor)
+  Cruise : 13.9 N @ 7737 rpm, J=0.41, eta_prop=0.70, eta_ges=0.57
+  Strom  : 27.6 A @6S
+  Last   : Cruise 30% von 72 N Standschub (Ziel >= 30%)
+  Kv     : Motor 450, ideal ~368 (Vmax 32 m/s)
+  Start  : 72 N statisch, 56 N @14 m/s (Bungee-Exit)
+  Flugzeit ~1.4 h, Reichweite ~101 km (bei L/D=12, 857 Wh, 20% Reserve)
+
+Spalten: ηges=Gesamtwirkungsgrad  P_cr=el.Leistung[W]  I=Strom[A]  Vmax[m/s]  Last=Lastpunkt  Masse=Motor+Rotor  Kv/Kvid=ist/ideal  Tstat=Standschub[N]
+
+Plots (6) im Run-Ordner gespeichert.
